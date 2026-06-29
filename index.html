@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الأسطى - للمقاولات العامة والصيانة</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Tajawal', sans-serif;
+        background: #f8fafc;
+        scroll-behavior: smooth;
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      .animate-fadeIn {
+        animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+    </style>
+
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "firebase/": "https://esm.sh/firebase@^12.9.0/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4"
+  }
+}
+</script>
+  <script type="module" crossorigin src="/el-osta/assets/index-BXEmg8YV.js"></script>
+  <link rel="stylesheet" crossorigin href="/el-osta/assets/index-DSNhR7PI.css">
+</head>
+  <body class="text-slate-900">
+    <div id="root"></div>
+</body>
+</html>
