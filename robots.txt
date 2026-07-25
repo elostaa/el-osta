@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://elostaa.github.io/el-osta/sitemap.xml
