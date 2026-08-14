@@ -27,7 +27,16 @@ const Register: React.FC<RegisterProps> = ({ onSwitch }) => {
   const [success, setSuccess] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const specialties = ['نجار', 'كهربائي', 'سباك', 'فني دش', 'نقاش'];
+  const specialties = [
+    'سباك',
+    'كهربائي',
+    'نجار',
+    'فني دش',
+    'نقاش',
+    'فني تكييف',
+    'صيانة اجهزة منزلية',
+    'فني الوميتال'
+  ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

@@ -1,7 +1,7 @@
 
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
+import { getAnalytics, isSupported } from "firebase/analytics";
+import { initializeFirestore } from "firebase/firestore";
 import { getDatabase } from "firebase/database";
 
 // إعدادات Firebase الخاصة بالمشروع
@@ -17,6 +17,21 @@ const firebaseConfig = {
 
 // تهيئة Firebase
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+
+// Initialize Firestore with auto-detect long polling to avoid connection drops in iframe/proxies
+export const db = initializeFirestore(app, {
+  experimentalAutoDetectLongPolling: true,
+});
+
 export const rtdb = getDatabase(app);
-export const analytics = getAnalytics(app);
+
+// Safely initialize analytics only if supported
+export let analytics: any = null;
+if (typeof window !== "undefined") {
+  isSupported().then((supported) => {
+    if (supported) {
+      analytics = getAnalytics(app);
+    }
+  }).catch(() => {});
+}
+

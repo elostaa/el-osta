@@ -23,6 +23,8 @@ const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({ user, onLogou
       if (docSnap.exists()) {
         setCurrentUserData({ id: docSnap.id, ...docSnap.data() } as User);
       }
+    }, (err) => {
+      console.warn("Technician user listener:", err);
     });
 
     if (currentUserData.isApproved) {
@@ -60,7 +62,8 @@ const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({ user, onLogou
             technicianId: val.technicianId || null,
             technicianName: val.technicianName || null,
             technicianPhone: val.technicianPhone || null,
-            technicianSpecialty: val.technicianSpecialty || null
+            technicianSpecialty: val.technicianSpecialty || null,
+            orderNumber: val.orderNumber || undefined
           };
 
           if (isPending && matchSpecialty) {
@@ -72,6 +75,8 @@ const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({ user, onLogou
         
         setAvailableOrders(available.sort((a, b) => b.createdAt - a.createdAt));
         setMyOrders(my.sort((a, b) => b.createdAt - a.createdAt));
+      }, (err) => {
+        console.warn("RTDB orders listener:", err);
       });
 
       return () => { unsubUser(); unsubOrders(); };
@@ -216,7 +221,7 @@ const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({ user, onLogou
                       {order.customerName}
                       {order.orderNumber && <span className="text-[10px] font-black text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">#{order.orderNumber}</span>}
                     </h3>
-                    <p className="text-[10px] md:text-[11px] font-black text-amber-600 mt-1">📍 {order.detailedLocation}</p>
+                    <p className="text-[10px] md:text-[11px] font-black text-slate-400 mt-1">📍 {order.detailedLocation}</p>
                   </div>
                   <div className="bg-slate-50 text-slate-500 px-3 py-1.5 md:px-6 md:py-2 rounded-xl md:rounded-2xl text-[8px] md:text-[10px] font-black">{order.specificTime}</div>
                 </div>

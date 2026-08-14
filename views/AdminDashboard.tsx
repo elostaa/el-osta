@@ -48,14 +48,20 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ user, onLogout }) => {
       }
       prevOrdersCount.current = sorted.length;
       setOrders(sorted);
+    }, (err) => {
+      console.warn("Orders listener error:", err);
     });
 
     const unsubUsers = onSnapshot(collection(db, 'users'), (snap) => {
       setUsers(snap.docs.map(doc => ({ id: doc.id, ...doc.data() } as User)));
+    }, (err) => {
+      console.warn("Users listener error:", err);
     });
 
     const unsubCustomers = onSnapshot(collection(db, 'customers'), (snap) => {
       setCustomers(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    }, (err) => {
+      console.warn("Customers listener error:", err);
     });
 
     const loyaltyRef = ref(rtdb, 'loyalty');
@@ -65,6 +71,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ user, onLogout }) => {
       } else {
         setRtdbLoyalty({});
       }
+    }, (err) => {
+      console.warn("Loyalty RTDB listener error:", err);
     });
 
     const notificationsRef = ref(rtdb, 'adminNotifications');
@@ -76,6 +84,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ user, onLogout }) => {
       } else {
         setAdminNotifications([]);
       }
+    }, (err) => {
+      console.warn("Admin notifications RTDB listener error:", err);
     });
 
     return () => { 
@@ -332,6 +342,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ user, onLogout }) => {
                               <span className="text-[8px] md:text-[10px] bg-white/20 px-2 md:px-3 py-1 rounded-full font-black whitespace-nowrap">{o.serviceType}</span>
                            </div>
                            <p className="text-[9px] md:text-[10px] font-black text-red-200 mt-2 italic">السبب: {o.failureReason || 'عطل غير محدد'}</p>
+                           {o.customerPhone && <p className="text-[9px] md:text-[10px] font-bold text-amber-200 mt-1">📞 هاتف العميل: {o.customerPhone}</p>}
                            <p className="text-[8px] md:text-[9px] text-white/50 mt-1 uppercase font-bold">بواسطة: {o.technicianName}</p>
                         </div>
                         <button onClick={() => resolveError(o.id)} className="w-full bg-white text-red-600 py-2 md:py-3 rounded-xl font-black text-[10px] md:text-xs hover:scale-105 transition shadow-xl">تأكيد حل المشكلة ✅</button>
@@ -473,6 +484,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ user, onLogout }) => {
                              <td className="p-4 md:p-8">
                                <p className="font-black text-slate-900 text-xs md:text-base">{o.customerName}</p>
                                {o.orderNumber && <span className="inline-block text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100 mb-1 ml-1">#{o.orderNumber}</span>}
+                               {o.customerPhone && <p className="text-[10px] md:text-xs font-bold text-amber-600">📞 {o.customerPhone}</p>}
                                <p className="text-[10px] md:text-xs text-slate-400">📍 {o.detailedLocation}</p>
                                {o.imageUrl && (
                                  <div className="mt-2">
@@ -539,6 +551,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ user, onLogout }) => {
                           {o.customerName}
                           {o.orderNumber && <span className="text-[11px] font-black text-slate-700 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">طلب رقم: #{o.orderNumber}</span>}
                         </p>
+                        {o.customerPhone && <p className="text-xs md:text-sm font-bold text-slate-800 mt-1">📞 {o.customerPhone}</p>}
                         <p className="text-[8px] md:text-[10px] text-amber-600 font-black uppercase tracking-widest mt-1">📍 {o.detailedLocation}</p>
                         <p className="text-[10px] md:text-xs text-slate-400 font-bold mt-2 italic opacity-60">"{o.description}"</p>
                         {o.imageUrl && (
@@ -822,6 +835,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ user, onLogout }) => {
                     <p className="text-slate-900 font-black text-lg mb-2">"{order.feedback || 'بدون تعليق'}"</p>
                     <div className="space-y-1 text-[10px] md:text-xs font-bold text-slate-400">
                       <p>👤 العميل: {order.customerName}</p>
+                      {order.customerPhone && <p className="text-amber-600 font-bold">📞 هاتف العميل: {order.customerPhone}</p>}
                       <p>👷‍♂️ الفني: {order.technicianName}</p>
                       <p>🛠️ الخدمة: {order.serviceType}</p>
                     </div>

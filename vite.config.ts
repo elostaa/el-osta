@@ -6,7 +6,6 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
-      base: '/el-osta/', // السطر ده المهم عشان الصور والملفات تفتح صح على جيت هاب
       server: {
         port: 3000,
         host: '0.0.0.0',

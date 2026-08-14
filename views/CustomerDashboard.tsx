@@ -235,6 +235,8 @@ const CustomerDashboard: React.FC<CustomerDashboardProps> = ({ user, onLogout })
           currentDiscountLevel: 5
         });
       }
+    }, (err) => {
+      console.warn("Customer loyalty listener error:", err);
     });
 
     return () => unsub();
@@ -268,6 +270,8 @@ const CustomerDashboard: React.FC<CustomerDashboardProps> = ({ user, onLogout })
             securityAnswer: ''
           });
         }
+      }, (err) => {
+        console.warn("Customer data listener error:", err);
       });
     }
 
@@ -652,7 +656,10 @@ const CustomerDashboard: React.FC<CustomerDashboardProps> = ({ user, onLogout })
     { name: 'كهربائي', icon: '⚡' },
     { name: 'نجار', icon: '🪚' },
     { name: 'فني دش', icon: '📡' },
-    { name: 'نقاش', icon: '🎨' }
+    { name: 'نقاش', icon: '🎨' },
+    { name: 'فني تكييف', icon: '❄️' },
+    { name: 'صيانة اجهزة منزلية', icon: '🔌' },
+    { name: 'فني الوميتال', icon: '🪟' }
   ];
 
   if (currentUserData.isSuspended) {
@@ -692,7 +699,7 @@ const CustomerDashboard: React.FC<CustomerDashboardProps> = ({ user, onLogout })
             <form onSubmit={(e) => handleCreateOrder(e, null, true)} className="p-10 space-y-6">
                <div>
                   <label className="block text-xs font-black text-slate-400 mb-2 uppercase">نوع الخدمة المطلوبة</label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {serviceOptions.map(opt => (
                       <button 
                         key={opt.name} 
@@ -903,7 +910,7 @@ const CustomerDashboard: React.FC<CustomerDashboardProps> = ({ user, onLogout })
 
             <form onSubmit={(e) => handleCreateOrder(e)} className="space-y-8 md:space-y-12">
               {/* Service Selection Bento (الخطوة الأولى) */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
                  {serviceOptions.map(opt => (
                    <button 
                     key={opt.name} 
@@ -1116,6 +1123,12 @@ const CustomerDashboard: React.FC<CustomerDashboardProps> = ({ user, onLogout })
                               <span>📍</span>
                               <span className="line-clamp-1">{o.detailedLocation}</span>
                            </div>
+                           {o.customerPhone && (
+                              <div className="flex items-center gap-2 text-[9px] md:text-[11px] font-black text-slate-500 bg-slate-50 px-3 md:px-4 py-1.5 md:py-2 rounded-full">
+                                 <span>📞</span>
+                                 <span>{o.customerPhone}</span>
+                              </div>
+                           )}
                         </div>
                      </div>
                      
